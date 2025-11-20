@@ -155,6 +155,31 @@ class QueueWithStack{
         if (s1.isEmpty()) return;
         s1.pop();
     }
+    
+    public void enqueue2(int d){
+        s1.push(d);
+    }
+    public void dequeue2(){
+        if(!s2.isEmpty()){
+            s2.pop();
+            return;
+        }
+        while(!s1.isEmpty()){
+            s2.push(s1.peek());
+            s1.pop();
+        }
+        s2.pop();
+    }
+
+    public void printInfo2(){
+        for(int i = s2.size()-1; i>=0; i--){
+            print("Element s2 at index " + i + ": " + s2.get(i));
+        }
+        for(int i = 0; i<=s1.size()-1; i++){
+            print("Element s1 at index " + i + ": " + s1.get(i));
+        }
+    }
+    
     public void printInfo(){
         for(int i = s1.size()-1; i>=0; i--){
             print("Element at index " + i + ": " + s1.get(i));
@@ -223,12 +248,14 @@ public class tut21 {
         // printInfo(q);
 
         QueueWithStack q = new QueueWithStack();
-        q.enqueue(1);
-        q.enqueue(2);
-        q.enqueue(3);
-        q.printInfo();
-        q.dequeue();
-        q.printInfo();
+        q.enqueue2(1);
+        q.enqueue2(2);
+        q.enqueue2(3);
+        q.printInfo2();
+        q.dequeue2();
+        q.enqueue2(3);
+        q.enqueue2(4);
+        q.printInfo2();
 
     }
 }
