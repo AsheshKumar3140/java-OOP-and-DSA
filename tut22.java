@@ -155,6 +155,35 @@ class BinaryTree{
 
     }
     
+    public int countDataAtLevelDFS(Node root, int currLevel, int k){
+        if(root==null) return 0;
+        if(currLevel == k){
+            return root.data;
+        }
+        return countDataAtLevelDFS(root.left, currLevel+1, k) + countDataAtLevelDFS(root.right, currLevel+1, k);
+
+    }
+    public int countDataAtLevelBFS(Node root, int k){
+        Queue<Node> q = new ArrayDeque<>();
+        q.add(root);
+        int level = 0;
+        int sum = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for(int i=0; i<size; i++){
+                Node curr = q.peek();
+                q.remove();
+                if(level==k) {
+                    sum += curr.data;
+                }
+                if(curr.left != null) q.add(curr.left);
+                if(curr.right != null) q.add(curr.right);
+            }
+            level++;
+        }
+        return sum;
+
+    }
 }
 
 
@@ -184,6 +213,10 @@ public class tut22 {
         BinaryTree.Node subRoot = subtree.build(subNodes);
         bt.levelOrder(subRoot);
         print("\nAre trees identical? : " + bt.isSubtree(root, subRoot));
+
+
+        print("Sum of nodes at level: " + bt.countDataAtLevelDFS(root, 0, 2));
+        print("Sum of nodes at level: " + bt.countDataAtLevelBFS(root, 2));
         
     }
     
